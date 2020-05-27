@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for item in adv %}
+
+<div class="card">
+    <h5 class="card-header">{{ item.date }}</h5>
+    <div class="card-body">
+        <h5 class="card-title">{{ item.title }}</h5>
+        <p class="card-text">{{ item.text }}</p>
+        <a href="{{ item.get_detailUrl }}" class="btn btn-primary">Подробнее</a>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
