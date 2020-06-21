@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<p>
+    {% for item in photo %}
+         <img src="{{ item.image.url }}" style="width:200px; height:200px;">
+    {% endfor %}
+</p>
+
+
 <div class="card">
     <h5 class="card-header">{{ adv.date }}</h5>
     <div class="card-body">

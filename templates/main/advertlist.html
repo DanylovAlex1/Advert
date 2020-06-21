@@ -3,7 +3,6 @@
 {% block content %}
 
 {% for item in adv %}
-
 <div class="card">
     <h5 class="card-header">{{ item.date }}</h5>
     <div class="card-body">
@@ -12,6 +11,57 @@
         <a href="{{ item.get_detailUrl }}" class="btn btn-primary">Подробнее</a>
     </div>
 </div>
+
 {% endfor %}
 
+
+{% if is_paginated %}
+
+<div class="pagination">
+    <nav aria-label="...">
+        <ul class="pagination">
+            {% if page_obj.has_previous %} <!--Если есть предыдущая страница-->
+            <li class="page-item">
+                <a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}" tabindex="-1"
+                   aria-disabled="true">Previous</a>
+            </li>
+            {% else %} <!--Нет предыдущей страницы-->
+            <li class="page-item disabled">
+                <a class="page-link" href="">Previous</a>
+            </li>
+            {% endif %}
+
+            {% for n in paginator.page_range %} <!--Цикл по количеству страниц-->
+
+            {% if page_obj.number == n %} <!--Если это текущая страница-->
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="#">{{ n }}<span class="sr-only">(current)</span></a>
+            </li>
+            {% else %} <!--Это не текущая страница-->
+            <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+            {% endif %}
+            {% endfor%}
+
+            {% if page_obj.has_next %} <!--Если есть Следующая страница-->
+            <li class="page-item">
+                <a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+            {% else %} <!--Нет следующей страницы-->
+            <li class="page-item disabled">
+                <a class="page-link" href="">Next</a>
+            </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+
+</div>
+{% endif %}
 {% endblock %}
+
+
+
+
+
+
+

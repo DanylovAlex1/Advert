@@ -15,6 +15,7 @@ class Advert(models.Model):
     class Meta:
         verbose_name = 'Объявление'
         verbose_name_plural = 'Объявления'
+        ordering = ['-date']
 
     def get_detailUrl(self):
         return reverse('adv_detail', kwargs={'pk': self.pk})
@@ -27,3 +28,9 @@ class Advert(models.Model):
 
     def get_DeleteUrl(self):
         return reverse('adv_delete', kwargs={'pk': self.pk})
+
+
+class Photo(models.Model):
+    title = models.CharField(verbose_name='Описание', max_length=50, blank=True, null=True)
+    image = models.ImageField(verbose_name='Фотография', upload_to='gallery/')
+    advert = models.ForeignKey(Advert, verbose_name='Объявление', on_delete=models.CASCADE)
