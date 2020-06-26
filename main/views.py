@@ -14,7 +14,7 @@ class AdvertListView(generic.ListView):
     # page= paginator.get_page(page_number)
     # queryset=page.object_list
     context_object_name = 'adv'
-    paginate_by = 5
+    paginate_by = 2
 
 
 

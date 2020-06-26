@@ -1,5 +1,21 @@
 from django.db import models
 from django.shortcuts import reverse
+from django.contrib.auth.admin import User
+
+
+
+def get_path_image(uname, iname):
+    '''формирую имя файла картинки.
+    к имени спереди добавляю путь - папку, с именем пользователя, где будет
+    храниться картинка.
+    Если этого не делать все будут в одной папке и имена будут перезатираться'''
+    # print('========>', uname)
+    # print('========>', iname)
+    path = str(uname).lower() + '/' + str(iname)
+    #    print('========>', path)
+    return path
+
+
 
 
 class Advert(models.Model):
@@ -31,6 +47,17 @@ class Advert(models.Model):
 
 
 class Photo(models.Model):
+    user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     title = models.CharField(verbose_name='Описание', max_length=50, blank=True, null=True)
     image = models.ImageField(verbose_name='Фотография', upload_to='gallery/')
     advert = models.ForeignKey(Advert, verbose_name='Объявление', on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        ''' переопределяю метод save
+        чтоб изменить значения image.name
+        '''
+        self.image.name = get_path_image(self.user, self.image.name)
+        super().save(*args, **kwargs)
+
+
+
