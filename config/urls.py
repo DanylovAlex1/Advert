@@ -9,5 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='adminka'),
     path('', include('main.urls')),  # подключаем файл urls.py из приложения main
 
+    path('accounts/', include('allauth.urls')),
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
