@@ -8,11 +8,8 @@ def get_path_image(uname, iname):
     '''формирую имя файла картинки.
     к имени спереди добавляю путь - папку, с именем пользователя, где будет
     храниться картинка.
-    Если этого не делать все будут в одной папке и имена будут перезатираться'''
-    # print('========>', uname)
-    # print('========>', iname)
+    Если этого не делать все будут в одной папке'''
     path = str(uname).lower() + '/' + str(iname)
-    #    print('========>', path)
     return path
 
 
@@ -31,12 +28,14 @@ class Advert(models.Model):
     email = models.EmailField(verbose_name='Email', max_length=40, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     gallery = models.ForeignKey(Gallery, verbose_name='Галерея', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
 
 
     class Meta:
         verbose_name = 'Объявление'
         verbose_name_plural = 'Объявления'
         ordering = ['-date']
+
 
     def get_detailUrl(self):
         return reverse('adv_detail', kwargs={'pk': self.pk})
