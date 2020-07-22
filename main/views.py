@@ -1,7 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from django.views import generic
 from main.permissions import UserIsOwnerOrAdminMixin
-from .models import Advert, Photo, Gallery
+from .models import Advert, Photo
 from .forms import AdvertForm
 
 
@@ -30,24 +31,45 @@ class AdvertDetailView(LoginRequiredMixin, generic.DetailView):
 
         context = super().get_context_data(**kwargs)
         context['photo'] = Photo.objects.filter(gallery=gallery)
+        context['permit'] = UserIsOwnerOrAdminMixin.has_permission(self)
         return context
 
 
 class AdvertCreate(LoginRequiredMixin, generic.CreateView):
     ''' создание нового объявления '''
-    form_class = AdvertForm
+    # form_class = AdvertForm
     template_name = 'main/advertcreate.html'
 
+    def get_form(self, form_class=AdvertForm):
+        form = AdvertForm(user=self.request.user)
+        return form
+
+    def post(self, request, *args, **kwargs):
+        bindform = AdvertForm(request.user, request.POST)
+        post = bindform.save(commit=False)
+        post.user = request.user
+        post.save()
+        return HttpResponseRedirect('/')
 
 
 class AdvertUpdate(UserIsOwnerOrAdminMixin, generic.UpdateView):
     ''' Редактирование объявления '''
     permission_required = 'firstproject.nge_advert'
-
-    model = Advert
-    form_class = AdvertForm
     template_name = 'main/advertupdate.html'
-    context_object_name = 'adv'
+    form_class = AdvertForm
+    form_class.user = 1 #TODO не забыть исправить заглушку
+
+
+    def get_queryset(self):
+        queryset = Advert.objects.filter(pk=self.kwargs['pk'])
+        #queryset.last().user
+        return queryset
+
+    # def get_form(self, form_class=AdvertForm):
+    #     # Advert.objects.filter(pk=self.pk)
+    #     form = AdvertForm(user=self.request.user)
+    #     #form.fields['user']=self.request.user
+    #     return form
 
 
 class AdvertDelete(UserIsOwnerOrAdminMixin, generic.DeleteView):
@@ -56,26 +78,3 @@ class AdvertDelete(UserIsOwnerOrAdminMixin, generic.DeleteView):
     context_object_name = 'adv'
     template_name = 'main/advert_confirm_delete.html'
     success_url = '/'
-
-
-class GalleryListView(generic.ListView):
-    model = Gallery
-    context_object_name = 'gallery'
-    template_name = 'main/gallery_create.html'
-
-
-class GalleryCreateView(generic.CreateView):
-    model = Gallery
-    context_object_name = 'gallery'
-    template_name = 'main/gallery_create.html'
-
-
-class GalleryUpdateView(generic.UpdateView):
-    model = Gallery
-    context_object_name = 'gallery'
-    template_name = 'main/gallery_create.html'
-
-class GalleryDeleteView(generic.DeleteView):
-    model = Gallery
-    context_object_name = 'gallery'
-    template_name = 'main/gallery_create.html'

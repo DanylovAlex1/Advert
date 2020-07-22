@@ -16,8 +16,10 @@
         <h5 class="card-title">{{ adv.phone }}</h5>
         <h5 class="card-title">{{ adv.email }}</h5>
         <p class="card-text">{{ adv.text }}</p>
+         {% if permit %}
         <a href="{{ adv.get_UpdateUrl }}" class="btn btn-primary">Редактировать</a>
         <a href="{{ adv.get_DeleteUrl }}" class="btn btn-danger">Удалить</a>
+         {% endif %}
     </div>
 </div>
 {% endblock %}
