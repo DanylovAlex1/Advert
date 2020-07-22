@@ -1,2 +1,3 @@
 # Advert
-test project Advert
+Тестовая программа, используемая для обучению школьников Python/Django
+
