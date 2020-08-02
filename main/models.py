@@ -16,6 +16,15 @@ class Gallery(models.Model):
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     title = models.CharField(verbose_name='Описание', max_length=50, blank=True, null=True)
 
+    class Meta:
+        ordering = ['title']
+
+    def get_detailUrl(self):
+        return reverse('gallery_update', kwargs={'pk': self.pk})
+
+    def get_deleteUrl(self):
+        return reverse('gallery_delete', kwargs={'pk': self.pk})
+
 
 class Advert(models.Model):
     '''

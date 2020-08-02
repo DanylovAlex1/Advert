@@ -15,7 +15,8 @@ class AdvertListView(generic.ListView):
     # page= paginator.get_page(page_number)
     # queryset=page.object_list
     context_object_name = 'adv'
-    paginate_by = 2
+    paginate_by = 2 #todo в будущем вынести параметры в общий файл настроек
+
 
 
 class AdvertDetailView(LoginRequiredMixin, generic.DetailView):
@@ -57,7 +58,7 @@ class AdvertUpdate(UserIsOwnerOrAdminMixin, generic.UpdateView):
     permission_required = 'firstproject.nge_advert'
     template_name = 'main/advertupdate.html'
     form_class = AdvertForm
-    form_class.user = 1 #TODO не забыть исправить заглушку
+    form_class.user = 1 #TODO не забыть исправить заглушку!
 
 
     def get_queryset(self):

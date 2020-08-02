@@ -10,6 +10,7 @@ urlpatterns = [
     path('', include('main.urls')),  # подключаем файл urls.py из приложения main
 
     path('accounts/', include('allauth.urls')),
+    path('gallery/', include('gallery.urls')),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
