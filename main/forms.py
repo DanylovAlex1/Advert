@@ -6,17 +6,16 @@ from main.models import Advert, Photo, Gallery
 
 class AdvertForm(forms.ModelForm):
     def __init__(self, user=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         if user:
             pk = user
         else:
-            pk = self.user #kwargs.get('user')
-        super(AdvertForm, self).__init__(*args, **kwargs)
+            pk = self.instance.user
+
         self.fields['gallery'].queryset = Gallery.objects.filter(user=pk)
 
-    # gallery = forms.ModelChoiceField(queryset=Gallery.objects.filter(pk=2), widget=forms.Select())
     class Meta:
         model = Advert
-
         fields = ['title', 'text', 'phone', 'email', 'gallery']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
@@ -25,6 +24,36 @@ class AdvertForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'gallery': forms.Select(attrs={'class': 'form-control'}),
         }
+
+
+#
+#
+# class AdvertUpdateForm(forms.ModelForm):
+#     def __init__(self, pk=None,
+#                  title=None,
+#                  user=None,
+#                  text=None,
+#                  phone=None,
+#                  email=None, *args, **kwargs):
+#         super(AdvertForm, self).__init__(*args, **kwargs)
+#
+#         self.fields['title'].initial = title
+#         self.fields['text'].initial = text
+#         self.fields['phone'].initial = phone
+#         self.fields['email'].initial = email
+#         self.fields['gallery'].queryset = Gallery.objects.filter(user=user)
+#
+#     class Meta:
+#         model = Advert
+#         fields = ['title', 'text', 'phone', 'email', 'gallery']
+#         widgets = {
+#             'title': forms.TextInput(attrs={'class': 'form-control'}),
+#             'text': forms.Textarea(attrs={'class': 'form-control'}),
+#             'phone': forms.TextInput(attrs={'class': 'form-control'}),
+#             'email': forms.EmailInput(attrs={'class': 'form-control'}),
+#             'gallery': forms.Select(attrs={'class': 'form-control'}),
+#         }
+#
 
 
 class PhotoCreateForm(forms.ModelForm):

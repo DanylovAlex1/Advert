@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
-
+<!--<img src="{{ item.image.url }}" style="width:200px; height:200px;">-->
 {% block content %}
 
-<p>
+<div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
+<div class="carousel-inner">
     {% for item in photo %}
-         <img src="{{ item.image.url }}" style="width:200px; height:200px;">
+        <div  data-interval="4000" class="carousel-item text-center text-light mb-5
+        {% if forloop.first %} active{% endif %}">
+              <img src="{{ item.image.url }}" style="width:600px; height:400px;">
+              <div class="carousel-caption capt">
+                  <h6>{{ item.title }}</h6>
+              </div>
+        </div>
     {% endfor %}
-</p>
+
+</div>
+</div>
 
 
 <div class="card">
