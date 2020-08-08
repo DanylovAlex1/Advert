@@ -1,9 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Prefetch
 from django.http import HttpResponseRedirect
 from django.views import generic
 from main.permissions import UserIsOwnerOrAdminMixin
-from .models import Advert, Photo, Gallery
+from .models import Advert, Photo
 from .forms import AdvertForm
 
 

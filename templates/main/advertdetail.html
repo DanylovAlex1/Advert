@@ -2,9 +2,10 @@
 <!--<img src="{{ item.image.url }}" style="width:200px; height:200px;">-->
 {% block content %}
 
-<div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
-<div class="carousel-inner">
-    {% for item in photo %}
+
+<div id="carouselAdvertGalleryList" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+   {% for item in photo %}
         <div  data-interval="4000" class="carousel-item text-center text-light mb-5
         {% if forloop.first %} active{% endif %}">
               <img src="{{ item.image.url }}" style="width:600px; height:400px;">
@@ -13,8 +14,7 @@
               </div>
         </div>
     {% endfor %}
-
-</div>
+  </div>
 </div>
 
 

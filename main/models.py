@@ -55,6 +55,9 @@ class Advert(models.Model):
     def get_DeleteUrl(self):
         return reverse('adv_delete', kwargs={'pk': self.pk})
 
+    def get_photo_gallery_list(self):
+        return reverse('photo_gallery_list', kwargs={'pk': self.pk})
+
 
 class Photo(models.Model):
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
@@ -69,3 +72,8 @@ class Photo(models.Model):
         '''
         self.image.name = get_path_image(self.user, self.image.name)
         super().save(*args, **kwargs)
+
+    def get_detailUrl(self):
+        return reverse('photo_gallery_list', kwargs={'pk': self.pk})
+    def get_deletelUrl(self):
+        return reverse('photo_delete', kwargs={'pk': self.pk})
