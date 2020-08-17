@@ -7,8 +7,9 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">{{ item.title }}</h5>
+
         <a href="{{ item.get_detailUrl }}" class="btn btn-primary">Изменить название</a>
-        <a href="{{ item.get_photo_gallery_list }}" class="btn btn-primary">Изменить набор фоток</a>
+        <a href="/gallery/photolist/{{ item.pk }}" class="btn btn-primary">Изменить набор фоток</a>
         <a href="{{ item.get_deleteUrl }}" class="btn btn-primary">Удалить</a>
     </div>
 </div>

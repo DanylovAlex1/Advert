@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block content %}
 
 {% for item in photolist %}
@@ -7,12 +6,9 @@
     <div class="card-body">
         <h5 class="card-title">{{ item.title }}</h5>
         <h5 class="card-title">{{ item.image }}</h5>
-        <a href="{{ item.get_detailUrl }}" class="btn btn-primary">Добавить</a>
-        <a href="{{ item.get_deleteUrl }}" class="btn btn-primary">Удалить</a>
+        <a href="/gallery/photodelete/{{ item.pk }}" class="btn btn-primary">Удалить</a>
     </div>
 </div>
 {% endfor %}
-
 {% include 'paginator.html' %}
-
 {% endblock %}

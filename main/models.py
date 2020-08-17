@@ -25,6 +25,9 @@ class Gallery(models.Model):
     def get_deleteUrl(self):
         return reverse('gallery_delete', kwargs={'pk': self.pk})
 
+    def __str__(self):
+        return self.title
+
 
 class Advert(models.Model):
     '''
@@ -42,6 +45,9 @@ class Advert(models.Model):
         verbose_name = 'Объявление'
         verbose_name_plural = 'Объявления'
         ordering = ['-date']
+
+    def __str__(self):
+        return self.title
 
     def get_detailUrl(self):
         return reverse('adv_detail', kwargs={'pk': self.pk})
@@ -73,7 +79,16 @@ class Photo(models.Model):
         self.image.name = get_path_image(self.user, self.image.name)
         super().save(*args, **kwargs)
 
-    def get_detailUrl(self):
-        return reverse('photo_gallery_list', kwargs={'pk': self.pk})
-    def get_deletelUrl(self):
+    # def get_photogallerylistUrl(self):
+    #     return reverse('photo_list', kwargs={'gallery': self.gallery})
+
+    def get_PhotodeleteUrl(self):
         return reverse('photo_delete', kwargs={'pk': self.pk})
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Фотограция'
+        verbose_name_plural = 'Фотографии'
+        ordering = ['user', 'gallery', 'title']
