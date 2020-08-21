@@ -1,26 +1,14 @@
 {% extends 'base.html' %}
-
 {% block content %}
 
-{% for item in adv %}
+{% for item in photolist %}
 <div class="card">
-    <h5 class="card-header">{{ item.date }}</h5>
     <div class="card-body">
         <h5 class="card-title">{{ item.title }}</h5>
-        <p class="card-text">{{ item.text }}</p>
-        <a href="{{ item.get_detailUrl }}" class="btn btn-primary">Подробнее</a>
+        <h5 class="card-title">{{ item.image }}</h5>
+        <a href="/gallery/photodelete/{{ item.pk }}" class="btn btn-primary">Удалить</a>
     </div>
 </div>
-
 {% endfor %}
-
 {% include 'paginator.html' %}
-
 {% endblock %}
-
-
-
-
-
-
-

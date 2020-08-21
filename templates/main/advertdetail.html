@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
-
+<!--<img src="{{ item.image.url }}" style="width:200px; height:200px;">-->
 {% block content %}
 
-<p>
-    {% for item in photo %}
-         <img src="{{ item.image.url }}" style="width:200px; height:200px;">
+
+<div id="carouselAdvertGalleryList" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+   {% for item in photo %}
+        <div  data-interval="4000" class="carousel-item text-center text-light mb-5
+        {% if forloop.first %} active{% endif %}">
+              <img src="{{ item.image.url }}" style="width:600px; height:400px;">
+              <div class="carousel-caption capt">
+                  <h6>{{ item.title }}</h6>
+              </div>
+        </div>
     {% endfor %}
-</p>
+  </div>
+</div>
 
 
 <div class="card">
@@ -16,8 +25,10 @@
         <h5 class="card-title">{{ adv.phone }}</h5>
         <h5 class="card-title">{{ adv.email }}</h5>
         <p class="card-text">{{ adv.text }}</p>
+         {% if permit %}
         <a href="{{ adv.get_UpdateUrl }}" class="btn btn-primary">Редактировать</a>
         <a href="{{ adv.get_DeleteUrl }}" class="btn btn-danger">Удалить</a>
+         {% endif %}
     </div>
 </div>
 {% endblock %}
