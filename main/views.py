@@ -8,14 +8,18 @@ from .forms import AdvertForm
 
 class AdvertListView(generic.ListView):
     ''' Список рекламных объявлeний '''
-    queryset = Advert.objects.all()
+    #    queryset = Advert.objects.all()
     template_name = 'main/advertlist.html'
-    # paginator=Paginator(queryset,2)
-    # page_number= request.GET.get('page',1)
-    # page= paginator.get_page(page_number)
-    # queryset=page.object_list
     context_object_name = 'adv'
-    paginate_by = 2  # todo в будущем вынести параметры в общий файл настроек
+    paginate_by = 2
+
+    def get_queryset(self):
+        if self.request.GET.get('val'):
+            value = self.request.GET.get('val')
+            queryset = Advert.objects.filter(text__contains=value)
+        else:
+            queryset = Advert.objects.all()
+        return queryset
 
 
 class AdvertDetailView(LoginRequiredMixin, generic.DetailView):

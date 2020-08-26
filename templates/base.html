@@ -48,24 +48,22 @@
         <a href="{% url 'adv_create' %}" type="button" class="btn btn-warning"> Создать объявление </a>
         {% endif %}
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="form-inline my-2 my-lg-0" action="{% url 'adv_list' %}" method="get">
+            <input class="form-control mr-sm-2" name="val" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
 
         {% if user.is_authenticated %}
         <span><b> &nbsp; {{ user.username }}&nbsp; </b></span>
-            <a class="nav-link" href="{% url 'account_logout' %}">Выйти</a>
+        <a class="nav-link" href="{% url 'account_logout' %}">Выйти</a>
         {% else %}
-            <a class="nav-link" href="{% url 'account_login' %}">Вход</a>
-            <a class="nav-link" href="{% url 'account_signup' %}">Регистрация</a>
+        <a class="nav-link" href="{% url 'account_login' %}">Вход</a>
+        <a class="nav-link" href="{% url 'account_signup' %}">Регистрация</a>
         {% endif %}
-
 
 
     </div>
 </nav>
-
 
 
 {% block content %}
