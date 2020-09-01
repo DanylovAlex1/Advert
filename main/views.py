@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.views import generic
 from main.permissions import UserIsOwnerOrAdminMixin
@@ -8,6 +9,7 @@ from .forms import AdvertForm
 
 class AdvertListView(generic.ListView):
     ''' Список рекламных объявлeний '''
+    filterset_class= None
     #    queryset = Advert.objects.all()
     template_name = 'main/advertlist.html'
     context_object_name = 'adv'
@@ -16,10 +18,17 @@ class AdvertListView(generic.ListView):
     def get_queryset(self):
         if self.request.GET.get('val'):
             value = self.request.GET.get('val')
-            queryset = Advert.objects.filter(text__contains=value)
+            #queryset = Advert.objects.filter(text__title__contains=value)
+            queryset = Advert.objects.filter(Q(text__contains=value) | Q(title__contains=value))
         else:
             queryset = Advert.objects.all()
         return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context=super().get_context_data(**kwargs)
+        val=self.request.GET.get('val')
+        context['search'] = val
+        return context
 
 
 class AdvertDetailView(LoginRequiredMixin, generic.DetailView):
